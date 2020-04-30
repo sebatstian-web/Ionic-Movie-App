@@ -8,6 +8,8 @@ import { TheMoviesDb } from '../interfaces/interfaces';
   providedIn: 'root'
 })
 export class ApisService {
+  private popularPage: number = 0;
+
   constructor(private http: HttpClient) {}
 
   private runQuery<T>(query: string) {
@@ -44,7 +46,9 @@ export class ApisService {
   }
 
   getPopularService() {
-    const query: string = '/discover/movie?sort_by=popularity.desc';
+    this.popularPage++;
+    const query: string = `/discover/movie?sort_by=popularity.desc&page=${this.popularPage}`;
+
     return this.runQuery<TheMoviesDb>(query);
   }
 }

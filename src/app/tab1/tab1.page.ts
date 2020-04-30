@@ -19,8 +19,17 @@ export class Tab1Page implements OnInit {
       .getFeatureService()
       .subscribe((resp) => (this.recentMovies = resp.results));
 
-    this.apis
-      .getPopularService()
-      .subscribe((resp) => (this.popularMovies = resp.results));
+    this.getPopular();
+  }
+
+  loadingMore() {
+    this.getPopular();
+  }
+
+  getPopular() {
+    this.apis.getPopularService().subscribe((resp) => {
+      const arrTemp: Array<any> = [...this.popularMovies, ...resp.results];
+      this.popularMovies = arrTemp;
+    });
   }
 }

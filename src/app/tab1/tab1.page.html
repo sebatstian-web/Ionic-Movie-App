@@ -27,5 +27,8 @@
     </ion-row>
   </ion-grid>
 
-  <app-slideshow-pairs [movies]="popularMovies"></app-slideshow-pairs>
+  <app-slideshow-pairs
+    [movies]="popularMovies"
+    (loadingMore)="loadingMore()"
+  ></app-slideshow-pairs>
 </ion-content>
