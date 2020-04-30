@@ -42,4 +42,9 @@ export class ApisService {
       `/discover/movie?primary_release_date.gte=${startDay}&primary_release_date.lte=${finalDay}`
     );
   }
+
+  getPopularService() {
+    const query: string = '/discover/movie?sort_by=popularity.desc';
+    return this.runQuery<TheMoviesDb>(query);
+  }
 }

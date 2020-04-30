@@ -10,10 +10,7 @@ import { Movie } from '../interfaces/interfaces';
 })
 export class Tab1Page implements OnInit {
   recentMovies: Array<Movie> = [];
-  slidesOpts: object = {
-    slidesPerView: 1.2,
-    freeMode: true
-  };
+  popularMovies: Array<Movie> = [];
 
   constructor(private apis: ApisService) {}
 
@@ -21,5 +18,9 @@ export class Tab1Page implements OnInit {
     this.apis
       .getFeatureService()
       .subscribe((resp) => (this.recentMovies = resp.results));
+
+    this.apis
+      .getPopularService()
+      .subscribe((resp) => (this.popularMovies = resp.results));
   }
 }
