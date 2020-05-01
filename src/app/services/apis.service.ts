@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 import { TheMoviesDb, MovieDetail, Credits } from '../interfaces/interfaces';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApisService {
   private popularPage: number = 0;
@@ -58,5 +58,9 @@ export class ApisService {
 
   getMovieActorsService(id: string) {
     return this.runQuery<Credits>(`/movie/${id}/credits?a=1`);
+  }
+
+  searchMovieService(search: string) {
+    return this.runQuery<TheMoviesDb>(`/search/movie?query=${search}`);
   }
 }
