@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
-import { TheMoviesDb } from '../interfaces/interfaces';
+import { TheMoviesDb, MovieDetail, Credits } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -50,5 +50,13 @@ export class ApisService {
     const query: string = `/discover/movie?sort_by=popularity.desc&page=${this.popularPage}`;
 
     return this.runQuery<TheMoviesDb>(query);
+  }
+
+  getMovieDetailService(id: string) {
+    return this.runQuery<MovieDetail>(`/movie/${id}?a=1`);
+  }
+
+  getMovieActorsService(id: string) {
+    return this.runQuery<Credits>(`/movie/${id}/credits?a=1`);
   }
 }
