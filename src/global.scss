@@ -38,3 +38,38 @@
   position: relative;
   top: 13%;
 }
+
+.poster-detail {
+  position: relative;
+  top: -75px;
+  left: -10px;
+  margin-bottom: -75px;
+}
+
+.title {
+  width: 100%;
+  position: absolute;
+  color: white;
+  background-color: red;
+  padding: 5px 5px 40px 5px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.title h1 {
+  position: absolute;
+  top: 28px;
+  left: 5px;
+}
+
+.actor-card {
+  height: 210px;
+}
+
+.actor-name {
+  position: relative;
+  top: 15px;
+}

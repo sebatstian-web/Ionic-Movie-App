@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 import { ApisService } from 'src/app/services/apis.service';
+import { MovieDetail, Cast } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-detail',
@@ -10,11 +12,29 @@ import { ApisService } from 'src/app/services/apis.service';
 export class DetailComponent implements OnInit {
   @Input() id: string;
 
-  constructor(private apis: ApisService) {}
+  movie: MovieDetail;
+  textHidden: number = 150;
+  cast: Array<Cast> = [];
+  slideOpts: object = {
+    slidesPerView: 2.8,
+    freeMode: true
+  };
+
+  constructor(private apis: ApisService, private modalCtrl: ModalController) {}
 
   ngOnInit() {
-    console.log(this.id);
-    this.apis.getMovieDetailService(this.id).subscribe(console.log);
-    this.apis.getMovieActorsService(this.id).subscribe(console.log);
+    this.apis
+      .getMovieDetailService(this.id)
+      .subscribe((resp) => (this.movie = resp));
+
+    this.apis
+      .getMovieActorsService(this.id)
+      .subscribe((resp) => (this.cast = resp.cast));
   }
+
+  back() {
+    this.modalCtrl.dismiss();
+  }
+
+  favorites() {}
 }
