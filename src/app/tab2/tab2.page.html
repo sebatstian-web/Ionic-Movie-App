@@ -7,7 +7,7 @@
 <ion-toolbar>
   <ion-searchbar
     placeholder="Buscar"
-    [debounce]="700"
+    [debounce]="500"
     [value]="textSearch"
     (ionChange)="searchMovie($event)"
     animated
@@ -15,15 +15,7 @@
 </ion-toolbar>
 
 <ion-content [fullscreen]="true">
-  <ion-grid fixed>
-    <ion-row>
-      <ion-col class="ion-text-center">
-        <ion-spinner></ion-spinner>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <ion-list>
+  <ion-list *ngIf="movies.length === 0">
     <ion-list-header>
       <ion-label>Sugerencias</ion-label>
     </ion-list-header>
@@ -35,4 +27,29 @@
       <ion-label color="primary">{{ suggestion }}</ion-label>
     </ion-item>
   </ion-list>
+
+  <ion-grid *ngIf="loading" fixed>
+    <ion-row>
+      <ion-col class="ion-text-center">
+        <ion-spinner></ion-spinner>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col *ngFor="let movie of movies" size="6">
+        <ion-card (click)="detailMovie(movie.id)">
+          <img [src]="movie.poster_path | image" [alt]="movie.original_title" />
+          <ion-card-header>
+            <ion-card-subtitle>{{ movie.release_date }}</ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content>
+            <h2>{{ movie.title }}</h2>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
