@@ -10,7 +10,9 @@ import { MovieDetail } from '../interfaces/interfaces';
 export class StorageService {
   movies: Array<MovieDetail> = [];
 
-  constructor(private storage: Storage, private toastCtrl: ToastController) {}
+  constructor(private storage: Storage, private toastCtrl: ToastController) {
+    this.loadingMovieStorageService();
+  }
 
   async presentToast(message: string) {
     const toast = await this.toastCtrl.create({
@@ -43,5 +45,24 @@ export class StorageService {
     // Guardando en el storage las películas favoritas
     this.presentToast(message);
     this.storage.set('movies', this.movies);
+
+    // El retorno permite saber si exisite o no la película en el storage
+    // Para manipular el icono star
+    return !exists;
+  }
+
+  async loadingMovieStorageService() {
+    // Obteniendo las películas guardadas en el storage
+    const movies = await this.storage.get('movies');
+    return (this.movies = movies || []);
+  }
+
+  async existsMovieService(id: any): Promise<boolean> {
+    await this.loadingMovieStorageService();
+    const exists = this.movies.find((m) => m.id === id);
+
+    // En vez de retornar todo el objecto, solo se devuelve true o false
+    // Si es un objecto es true
+    return exists ? true : false;
   }
 }

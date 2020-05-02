@@ -16,6 +16,7 @@ export class DetailComponent implements OnInit {
   movie: MovieDetail;
   textHidden: number = 150;
   cast: Array<Cast> = [];
+  starIcon: string = 'star-outline';
   slideOpts: object = {
     slidesPerView: 2.8,
     freeMode: true,
@@ -28,6 +29,10 @@ export class DetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.storage
+      .existsMovieService(this.id)
+      .then((resp) => (this.starIcon = resp ? 'star' : 'star-outline'));
+
     this.apis
       .getMovieDetailService(this.id)
       .subscribe((resp) => (this.movie = resp));
@@ -42,6 +47,7 @@ export class DetailComponent implements OnInit {
   }
 
   saveFavorite() {
-    this.storage.moviesSaveService(this.movie);
+    const exists = this.storage.moviesSaveService(this.movie);
+    this.starIcon = exists ? 'star' : 'star-outline';
   }
 }
