@@ -16,7 +16,10 @@ import { AppComponent } from './app.component';
   entryComponents: [],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    // Por defecto utiliza Material Design
+    IonicModule.forRoot({
+      mode: 'md',
+    }),
     HttpClientModule,
     IonicStorageModule.forRoot(),
     AppRoutingModule,

@@ -2,13 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
-import { TheMoviesDb, MovieDetail, Credits } from '../interfaces/interfaces';
+import {
+  TheMoviesDb,
+  MovieDetail,
+  Credits,
+  Genre,
+} from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApisService {
   private popularPage: number = 0;
+  genres: Array<Genre> = [];
 
   constructor(private http: HttpClient) {}
 
@@ -62,5 +68,14 @@ export class ApisService {
 
   searchMovieService(search: string) {
     return this.runQuery<TheMoviesDb>(`/search/movie?query=${search}`);
+  }
+
+  loadingGenreService(): Promise<Array<Genre>> {
+    return new Promise((resolve) => {
+      this.runQuery('/genre/movie/list?a=1').subscribe((resp: any) => {
+        this.genres = resp.genres;
+        resolve(this.genres);
+      });
+    });
   }
 }
